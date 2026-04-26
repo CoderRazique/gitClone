@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./dashboard.css";
 import Navbar from "../Navbar";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API = import.meta.env.VITE_API_URL || "http://52.90.203.90:3000";
 
 const Dashboard = () => {
   const [repositories, setRepositories] = useState([]);
