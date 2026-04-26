@@ -34,7 +34,7 @@ const CreateRepo = () => {
     try {
       setLoading(true);
 
-      await axios.post("http://localhost:3000/repo/create", {
+      await axios.post("http://52.90.203.90:3000/repo/create", {
         ...form,
         owner: userId,
       });
