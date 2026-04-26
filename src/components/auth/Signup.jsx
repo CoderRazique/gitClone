@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../authContext";
-import { useNavigate } from "react-router-dom"; // ✅ FIX
-
-import { Box, Button, Heading } from "@primer/react";
+import { useNavigate, Link } from "react-router-dom";
 import "./auth.css";
-
 import logo from "../../assets/github-mark-white.png";
-import { Link } from "react-router-dom";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -16,12 +12,11 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
 
   const { setCurrentUser } = useAuth();
-  const navigate = useNavigate(); // ✅ FIX
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    // ✅ Validation
     if (!email || !username || !password) {
       alert("All fields are required");
       return;
@@ -36,13 +31,10 @@ const Signup = () => {
         username,
       });
 
-      console.log("Signup Response:", res.data); // 🔍 DEBUG
-
-      // ✅ Handle both response formats
       const userId = res.data.userId || res.data.user?._id;
 
       if (!userId) {
-        throw new Error("User ID not found in response");
+        throw new Error("User ID not found");
       }
 
       localStorage.setItem("token", res.data.token);
@@ -50,16 +42,10 @@ const Signup = () => {
 
       setCurrentUser(userId);
 
-      // ✅ SPA redirect (NO reload)
       navigate("/", { replace: true });
     } catch (err) {
       console.error(err);
-
-      if (err.response?.data?.message) {
-        alert(err.response.data.message);
-      } else {
-        alert("Signup Failed!");
-      }
+      alert(err.response?.data?.message || "Signup Failed!");
     } finally {
       setLoading(false);
     }
@@ -72,11 +58,7 @@ const Signup = () => {
       </div>
 
       <div className="login-box-wrapper">
-        <div className="login-heading">
-          <Box sx={{ padding: 2, borderBottom: "1px solid #d0d7de", mb: 3 }}>
-            <Heading as="h1">Sign Up</Heading>
-          </Box>
-        </div>
+        <h1 className="login-title">Sign Up</h1>
 
         <form className="login-box" onSubmit={handleSignup}>
           <div>
@@ -109,14 +91,9 @@ const Signup = () => {
             />
           </div>
 
-          <Button
-            type="submit"
-            variant="primary"
-            className="login-btn"
-            disabled={loading}
-          >
+          <button type="submit" className="login-btn" disabled={loading}>
             {loading ? "Loading..." : "Signup"}
-          </Button>
+          </button>
         </form>
 
         <div className="pass-box">

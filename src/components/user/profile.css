@@ -1,106 +1,112 @@
+/* ===== GLOBAL ===== */
+body {
+    background-color: #0d1117;
+    margin: 0;
+    color: #c9d1d9;
+}
+
+/* ===== TABS ===== */
+.profile-tabs {
+    display: flex;
+    gap: 4rem;
+    text-align: center;
+    justify-content: center;
+    padding: 12px 40px;
+    border-bottom: 2px solid #fafcff;
+}
+
+.profile-tabs span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    color: #8b949e;
+}
+
+.active-tab {
+    color: white;
+    font-weight: 600;
+}
+
+/* ===== LOGOUT ===== */
+.logout-btn {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    padding: 10px 15px;
+    background: #21262d;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* ===== WRAPPER ===== */
 .profile-page-wrapper {
     display: flex;
-    min-height: 100vh;
-    color: whitesmoke;
+    justify-content: center;
     width: 100%;
-    /* padding: 3rem; */
-    /* flex-wrap: wrap; */
+    padding: 30px 20px;
 }
 
+/* ===== MAIN CONTAINER ===== */
+.profile-container {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    gap: 5rem;
+}
+
+/* ===== LEFT ===== */
 .user-profile-section {
     width: 250px;
-    /* min-height: 100vh; */
     display: flex;
     flex-direction: column;
-    padding: 40px 10px;
-}
-
-.user-repo-section {
-    margin: 0px auto;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.user-name {
-    /* width: 250px; */
-    margin: 10px 20px 10px 10px;
-    /* margin: 10px auto; */
+    align-items: center;
 }
 
 .profile-image {
-    margin: 10px auto;
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    background-color: grey;
+    background: grey;
 }
 
 .follow-btn {
-    background-color: #20272d;
-    width: 250px;
-    margin: 10px auto;
+    margin-top: 15px;
+    width: 100%;
     height: 40px;
-    border-radius: 10px;
-    color: whitesmoke;
+    border-radius: 8px;
+    background-color: #21262d;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .follower {
     display: flex;
-    justify-content: center;
-    width: 250px;
-    height: 30px;
     gap: 10px;
-    margin: 10px auto;
+    margin-top: 10px;
 }
 
-.repo-card-wrapper {
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 40px 20px;
+/* ===== RIGHT ===== */
+.profile-right {
+    flex: 1;
 }
 
-.repo {
-    border: 0.5px solid grey;
-    border-radius: 10px;
-    width: 400px;
-    height: 210px;
-    padding: 20px 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
 
-.repo-name {
-    cursor: pointer;
-    color: #408ced;
-    font-size: 20px;
-}
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+        align-items: center;
+    }
 
-.description {
-    color: grey;
-    font-size: 15px;
-}
-
-@media screen and (max-width: 750px) {
-    .repo {
+    .user-profile-section {
         width: 100%;
     }
-}
 
-@media screen and (max-width: 570px) {
-    .user-profile-section {
-        margin: auto;
+    .profile-right {
+        width: 100%;
     }
-
-    .profile-page-wrapper {
-        display: block;
-    }
-}
-
-#logout:hover {
-    border: 1px solid white;
 }

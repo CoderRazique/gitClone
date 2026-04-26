@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./dashboard.css";
 import Navbar from "../Navbar";
 
+const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
 const Dashboard = () => {
   const [repositories, setRepositories] = useState([]);
   const [suggestedRepositories, setSuggestedRepositories] = useState([]);
@@ -12,11 +14,16 @@ const Dashboard = () => {
   useEffect(() => {
     const userId = localStorage.getItem("userId");
 
+    if (!userId) {
+      setError("User not logged in");
+      setLoading(false);
+      return;
+    }
+
     const fetchRepositories = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/repo/user/${userId}`);
+        const res = await fetch(`${API}/repo/user/${userId}`);
         const data = await res.json();
-
         setRepositories(data.repositories || []);
       } catch (err) {
         console.error(err);
@@ -26,9 +33,8 @@ const Dashboard = () => {
 
     const fetchSuggestedRepositories = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/repo/all`);
+        const res = await fetch(`${API}/repo/all`);
         const data = await res.json();
-
         setSuggestedRepositories(data || []);
       } catch (err) {
         console.error(err);
@@ -44,23 +50,22 @@ const Dashboard = () => {
     repo?.name?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  if (loading) return <p>Loading...</p>;
-
-  if (error) return <p>{error}</p>;
-
   return (
-    <div className="dasSection">
+    <div className="dashboard-wrapper">
+      {/* NAVBAR */}
       <Navbar />
 
-      <section id="dashboard">
-        <aside>
+      {/* MAIN LAYOUT */}
+      <div className="dashboard-container">
+        {/* LEFT SIDEBAR */}
+        <aside className="left-sidebar">
           <h3>Suggested Repositories</h3>
 
           {suggestedRepositories.length === 0 ? (
             <p>No suggestions</p>
           ) : (
             suggestedRepositories.map((repo) => (
-              <div key={repo._id}>
+              <div key={repo._id} className="repo-card">
                 <h4>{repo.name}</h4>
                 <p>{repo.description || "No description"}</p>
               </div>
@@ -68,8 +73,8 @@ const Dashboard = () => {
           )}
         </aside>
 
-        {/* MAIN */}
-        <main>
+        {/* MAIN CONTENT */}
+        <main className="main-content">
           <h2>Your Repositories</h2>
 
           <div id="search">
@@ -81,34 +86,31 @@ const Dashboard = () => {
             />
           </div>
 
-          {filteredRepos.length === 0 ? (
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p style={{ color: "red" }}>{error}</p>
+          ) : filteredRepos.length === 0 ? (
             <p>No repositories found</p>
           ) : (
             filteredRepos.map((repo) => (
-              <div key={repo._id}>
+              <div key={repo._id} className="repo-card">
                 <h4>{repo.name}</h4>
-                {/* <p>{repo.description || "No description"}</p> */}
               </div>
             ))
           )}
         </main>
 
-        {/* RIGHT */}
-        <aside>
+        {/* RIGHT SIDEBAR */}
+        <aside className="right-sidebar">
           <h3>Upcoming Events</h3>
           <ul>
-            <li>
-              <p>Tech Conference - Dec 15</p>
-            </li>
-            <li>
-              <p>Developer Meetup - Dec 25</p>
-            </li>
-            <li>
-              <p>React Summit - Jan 5</p>
-            </li>
+            <li>Tech Conference - Dec 15</li>
+            <li>Developer Meetup - Dec 25</li>
+            <li>React Summit - Jan 5</li>
           </ul>
         </aside>
-      </section>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,124 @@
-#dashboard {
-    display: flex;
-    width: 1080px;
-    justify-content: space-between;
-    /* margin-left: 5rem; */
+/* ===== GLOBAL ===== */
+body {
+    margin: 0;
+    background-color: #0d1117;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #c9d1d9;
+}
+
+/* ===== WRAPPER ===== */
+.dashboard-wrapper {
+    width: 100%;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    width: 100%;
+    border-bottom: 1px solid #30363d;
+}
+
+/* ===== MAIN CONTAINER (FULL WIDTH FIX) ===== */
+.dashboard-container {
+    width: 100%;
+    padding: 20px 40px;
+    /* 👉 side spacing */
+
+    display: grid;
+    grid-template-columns: 280px 1fr 300px;
+    /* better proportions */
+    gap: 25px;
+}
+
+/* ===== SIDEBAR ===== */
+.left-sidebar,
+.right-sidebar {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 16px;
+    height: fit-content;
+}
+
+/* ===== MAIN ===== */
+.main-content {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* ===== HEADINGS ===== */
+h2,
+h3 {
+    margin-bottom: 15px;
+}
+
+/* ===== SEARCH ===== */
+#search input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #30363d;
+    background-color: #0d1117;
+    color: #c9d1d9;
+}
+
+/* ===== REPO CARD ===== */
+.repo-card {
+    border: 1px solid #30363d;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background-color: #0d1117;
+    transition: 0.2s ease;
+}
+
+.repo-card:hover {
+    background-color: #1f2937;
+    transform: translateY(-2px);
+}
+
+/* ===== TEXT ===== */
+.repo-card h4 {
+    margin: 0;
+    color: #58a6ff;
+}
+
+.repo-card p {
+    font-size: 13px;
+    color: #8b949e;
+}
+
+/* ===== EVENTS ===== */
+.right-sidebar ul {
+    padding-left: 18px;
+}
+
+/* ===== RESPONSIVE ===== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .dashboard-container {
+        grid-template-columns: 260px 1fr;
+    }
+
+    .right-sidebar {
+        display: none;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .dashboard-container {
+        grid-template-columns: 1fr;
+        padding: 15px;
+    }
+
+    .left-sidebar {
+        order: 2;
+    }
+
+    .main-content {
+        order: 1;
+    }
 }

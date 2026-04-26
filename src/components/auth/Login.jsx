@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../authContext";
-import { useNavigate } from "react-router-dom";
-
-import { Box, Button, Heading } from "@primer/react";
+import { useNavigate, Link } from "react-router-dom";
 import "./auth.css";
-
 import logo from "../../assets/github-mark-white.png";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -54,11 +50,7 @@ const Login = () => {
       </div>
 
       <div className="login-box-wrapper">
-        <div className="login-heading">
-          <Box sx={{ padding: 2, borderBottom: "1px solid #d0d7de", mb: 3 }}>
-            <Heading as="h1">Sign In</Heading>
-          </Box>
-        </div>
+        <h1 className="login-title">Sign In</h1>
 
         <form className="login-box" onSubmit={handleLogin}>
           <div>
@@ -81,14 +73,9 @@ const Login = () => {
             />
           </div>
 
-          <Button
-            type="submit"
-            variant="primary"
-            className="login-btn"
-            disabled={loading}
-          >
+          <button type="submit" className="login-btn" disabled={loading}>
             {loading ? "Loading..." : "Login"}
-          </Button>
+          </button>
         </form>
 
         <div className="pass-box">

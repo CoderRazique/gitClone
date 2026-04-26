@@ -7,6 +7,8 @@ import { FaBook, FaStar } from "react-icons/fa";
 import HeatMapProfile from "./HeatMap";
 import { useAuth } from "../../authContext";
 
+const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
 const Profile = () => {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState(null);
@@ -15,7 +17,6 @@ const Profile = () => {
   useEffect(() => {
     const userId = localStorage.getItem("userId");
 
-    // 🔒 protect route
     if (!userId) {
       navigate("/auth");
       return;
@@ -23,12 +24,10 @@ const Profile = () => {
 
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/userProfile/${userId}`,
-        );
-        setUserDetails(response.data);
+        const res = await axios.get(`${API}/userProfile/${userId}`);
+        setUserDetails(res.data);
       } catch (err) {
-        console.error("Cannot fetch user details:", err);
+        console.error(err);
       }
     };
 
@@ -36,71 +35,54 @@ const Profile = () => {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
+    localStorage.clear();
     setCurrentUser(null);
-    navigate("/auth"); // ✅ SPA navigation
+    navigate("/auth");
   };
 
   return (
     <>
       <Navbar />
 
-      {/* ✅ Replacement for UnderlineNav */}
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          padding: "12px 20px",
-          borderBottom: "1px solid #30363d",
-        }}
-      >
-        <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <FaBook />
-          Overview
+      {/* Tabs */}
+      <div className="profile-tabs">
+        <span className="active-tab">
+          <FaBook /> Overview
         </span>
 
-        <span
-          onClick={() => navigate("/repo")}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            cursor: "pointer",
-            color: "#8b949e",
-          }}
-        >
-          <FaStar />
-          Starred Repositories
+        <span onClick={() => navigate("/repo")}>
+          <FaStar /> Starred
         </span>
       </div>
 
-      <button
-        onClick={handleLogout}
-        style={{ position: "fixed", bottom: "50px", right: "50px" }}
-        id="logout"
-      >
+      {/* Logout */}
+      <button className="logout-btn" onClick={handleLogout}>
         Logout
       </button>
 
+      {/* MAIN */}
       <div className="profile-page-wrapper">
-        <div className="user-profile-section">
-          <div className="profile-image"></div>
+        <div className="profile-container">
+          {/* LEFT */}
+          <div className="user-profile-section">
+            <div className="profile-image"></div>
 
-          <div className="name">
             <h3>{userDetails?.username || "Loading..."}</h3>
+
+            <button className="follow-btn">Follow</button>
+
+            <div className="follower">
+              <p>10 Followers</p>
+              <p>3 Following</p>
+            </div>
           </div>
 
-          <button className="follow-btn">Follow</button>
-
-          <div className="follower">
-            <p>10 Followers</p>
-            <p>3 Following</p>
+          {/* RIGHT */}
+          <div className="profile-right">
+            <div className="heat-map-section">
+              <HeatMapProfile />
+            </div>
           </div>
-        </div>
-
-        <div className="heat-map-section">
-          <HeatMapProfile />
         </div>
       </div>
     </>

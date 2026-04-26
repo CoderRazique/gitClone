@@ -4,22 +4,26 @@ import "./navbar.css";
 
 const Navbar = () => {
   return (
-    <nav style={{ marginTop: "1rem" }}>
-      <Link to="/">
-        <div>
+    <nav className="navbar">
+      {/* LEFT */}
+      <div className="nav-left">
+        <Link to="/" className="logo-link">
           <img
             src="https://www.github.com/images/modules/logos_page/GitHub-Mark.png"
             alt="GitHub Logo"
           />
-          <h3>GitHub</h3>
-        </div>
-      </Link>
-      <div>
-        <Link to="/repo/create">
-          <p>Create a Repository</p>
+          <span>GitHub</span>
         </Link>
-        <Link to="/profile">
-          <p>Profile</p>
+      </div>
+
+      {/* RIGHT */}
+      <div className="nav-right">
+        <Link to="/repo/create" className="nav-link">
+          Create Repository
+        </Link>
+
+        <Link to="/profile" className="nav-link">
+          Profile
         </Link>
       </div>
     </nav>
