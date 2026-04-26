@@ -7,7 +7,7 @@ import { FaBook, FaStar } from "react-icons/fa";
 import HeatMapProfile from "./HeatMap";
 import { useAuth } from "../../authContext";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API = import.meta.env.VITE_API_URL || "http://52.90.203.90:3000";
 
 const Profile = () => {
   const navigate = useNavigate();
